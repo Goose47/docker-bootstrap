@@ -118,6 +118,7 @@ echo "Configuration files copied"
 cd $app_path
 # Start the containers
 docker compose up -d
+docker exec app_laravel composer install
 # todo ./commands/create_fresh_laravel_project.bash: line 21: ./config/pgsql/.env: No such file or directory
 # todo cp: cannot create regular file '/home/dev/app/nginx/conf.d/nginx.conf': No such file or directory
 
