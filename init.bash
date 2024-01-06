@@ -104,3 +104,5 @@ while true; do
         *) continue ;;
     esac
 done
+
+# Copy config files
