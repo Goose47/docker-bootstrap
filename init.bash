@@ -109,7 +109,10 @@ done
 echo "Copying configuration files"
 cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
+mkdir "$app_path/nginx/conf.d"
 cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
+mkdir "$app_path/pgsql"
+cp ./config/services/pgsql/.env "$app_path/pgsql/.env"
 echo "Configuration files copied"
 
 cd $app_path
