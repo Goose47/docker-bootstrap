@@ -53,7 +53,7 @@ while true; do
     prompt_user "Do you want to add current user to docker group (for running docker commands without sudo)? (Y/n)  "
     case $? in
         0)
-          bash ./commands/add_user_to_docker_group.bash $USER
+          bash ./commands/add_user_to_docker_group.bash $SUDO_USER
           break ;;
         1) break ;;
         *) continue ;;

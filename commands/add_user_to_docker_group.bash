@@ -7,4 +7,4 @@ fi
 
 username=$1
 
-sudo usermod -aG docker $username
+usermod -aG docker $username
