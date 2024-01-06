@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
     exit 1
 fi
 
-path=$1
+path="$1/laravel"
 
 # build image
 docker build -t laravel_bootstrap_image ./config/services/laravel/bootstrap

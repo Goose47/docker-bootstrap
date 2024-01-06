@@ -92,9 +92,15 @@ mkdir $app_path
 echo "$app_path created"
 
 # Create fresh laravel project
-echo "Creating fresh laravel project"
-bash ./commands/create_fresh_laravel_project.bash $app_path
-echo "Fresh laravel project created"
-
-cd $app_path
-
+while true; do
+    prompt_user "Create fresh Laravel project at $app_path/laravel? (Y/n)  "
+    case $? in
+        0)
+          echo "Creating fresh Laravel project"
+          bash ./commands/create_fresh_laravel_project.bash $app_path
+          echo "Fresh Laravel project created"
+          break ;;
+        1) break ;;
+        *) continue ;;
+    esac
+done
