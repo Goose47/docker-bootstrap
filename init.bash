@@ -79,7 +79,7 @@ while true; do
       app_path="/home/$SUDO_USER/$app_name"
   fi
 
-  if [ -d "$directory" ]; then
+  if [ -d "$app_path" ]; then
       echo "Directory already exists."
   else
     break

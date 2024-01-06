@@ -1,12 +1,17 @@
-FROM ubuntu:latest
-
-# Install the required package
-RUN apt update
-
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+FROM php:8.1-fpm
 
 # Set a working directory
 WORKDIR /app
 
-RUN composer create-project laravel/laravel .
+# Install the required package
+RUN apt update
+RUN apt install -y \
+    git \
+    unzip
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Install php extensions
+RUN docker-php-ext-install curl xml zip
+
+RUN composer create-project laravel/laravel . # todo runs server wtf?
