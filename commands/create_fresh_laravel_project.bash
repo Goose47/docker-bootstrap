@@ -15,7 +15,7 @@ docker run -v $path:/app laravel_bootstrap_image composer create-project laravel
 docker image rm -f laravel_bootstrap_image
 
 # chmod storage
-chmod "$path/storage" -R +rw
+chmod -R +rw "$path/storage"
 # Changing the laravel .env variables
 # Getting variables from pgsql config
 source ./config/pgsql/.env
