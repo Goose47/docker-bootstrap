@@ -106,3 +106,21 @@ while true; do
 done
 
 # Copy config files
+echo "Copying configuration files"
+cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
+cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
+cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d"
+echo "Configuration files copied"
+
+cd $app_path
+# Start the containers
+docker compose up -d
+
+
+# todo pgpassword vs postgres_pssword?
+# todo chmod storage test
+# todo composer install if no vendor entrypoint script???
+# todo flask
+# todo ssl
+# todo colored messages
+# todo services selection

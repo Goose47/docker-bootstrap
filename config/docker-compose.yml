@@ -37,6 +37,7 @@ services:
       - ./laravel:/var/www/app/laravel
     networks:
       - app
+    command: composer install
 
   redis:
     container_name: app_redis
