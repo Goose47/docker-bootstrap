@@ -86,6 +86,15 @@ while true; do
   fi
 done
 
+# Create app path
+echo "Creating $app_path"
 mkdir $app_path
+echo "$app_path created"
+
+# Create fresh laravel project
+echo "Creating fresh laravel project"
+bash ./commands/create_fresh_laravel_project.bash $app_path
+echo "Fresh laravel project created"
+
 cd $app_path
 
