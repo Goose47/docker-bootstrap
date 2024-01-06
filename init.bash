@@ -24,6 +24,7 @@ prompt_user() {
 
 # MAIN SCRIPT
 
+echo "Configuring docker..."
 # install docker
 while true; do
     prompt_user "Do you want to install docker? (Y/n)  "
@@ -59,3 +60,32 @@ while true; do
         *) continue ;;
     esac
 done
+
+# Getting application name
+echo "Docker configured, creating application..."
+read -p "Enter application name (default: app) => " app_name
+
+# If no input is provided, set a default value
+if [ -z "$app_name" ]; then
+    app_name="app"
+fi
+
+# Getting application path
+while true; do
+  read -p "Enter application path (default: /home/$SUDO_USER/$app_name) => " app_path
+
+  # If no input is provided, set a default value
+  if [ -z "$app_path" ]; then
+      app_path="/home/$SUDO_USER/$app_name"
+  fi
+
+  if [ -d "$directory" ]; then
+      echo "Directory already exists."
+  else
+    break
+  fi
+done
+
+mkdir $app_path
+cd $app_path
+
