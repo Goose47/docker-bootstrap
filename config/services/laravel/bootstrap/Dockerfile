@@ -13,5 +13,3 @@ RUN apt install -y \
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Install php extensions
 RUN docker-php-ext-install curl xml zip
-
-RUN composer create-project laravel/laravel . # todo runs server wtf?

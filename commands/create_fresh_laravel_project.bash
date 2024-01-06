@@ -9,7 +9,7 @@ path=$1
 
 # build image
 docker build -t laravel_bootstrap_image ./config/services/laravel/bootstrap
-# run image which installs composer and creates fresh laravel project in /app with volume that copies it to the $path
-docker run -v $path:/app laravel_bootstrap_image
-# remove the image after the container did it work
+# run container with command which creates fresh laravel project in /app with volume that copies it to the $path
+docker run -v $path:/app laravel_bootstrap_image composer create-project laravel/laravel .
+# remove the image after the container did its work
 docker image rm -f laravel_bootstrap_image
