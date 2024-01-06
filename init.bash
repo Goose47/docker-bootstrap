@@ -1,13 +1,11 @@
 #!/bin/bash
 
-# Check if the script is provided with at least one argument
-if [ $# -eq 0 ]; then
-    echo "Usage: $0 <username>"
-    exit 1
-fi
+# Get the username of current user
+username=$USER
 
-# Get the username from the command line argument
-username=$1
-
-# Echo the username
-echo "Username: $username"
+# install docker
+bash ./commands/install_docker.bash
+# install docker compose
+bash ./commands/install_docker_compose.bash
+# add current user to docker group
+bash ./commands/add_user_to_docker_group.bash username
