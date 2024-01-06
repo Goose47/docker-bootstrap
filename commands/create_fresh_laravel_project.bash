@@ -18,7 +18,7 @@ docker image rm -f laravel_bootstrap_image
 chmod -R +rw "$path/storage"
 # Changing the laravel .env variables
 # Getting variables from pgsql config
-source ./config/pgsql/.env
+source ./config/services/pgsql/.env
 sed -i -e "s/^DB_CONNECTION=.*/DB_CONNECTION=pgsql/" \
        -e "s/^DB_HOST=.*/DB_HOST=pgsql/" \
        -e "s/^DB_PORT=.*/DB_PORT=5432/" \

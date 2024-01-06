@@ -109,7 +109,7 @@ done
 echo "Copying configuration files"
 cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
-mkdir "$app_path/nginx/conf.d"
+mkdir -p "$app_path/nginx/conf.d"
 cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
 mkdir "$app_path/pgsql"
 cp ./config/services/pgsql/.env "$app_path/pgsql/.env"
@@ -118,6 +118,8 @@ echo "Configuration files copied"
 cd $app_path
 # Start the containers
 docker compose up -d
+# todo ./commands/create_fresh_laravel_project.bash: line 21: ./config/pgsql/.env: No such file or directory
+# todo cp: cannot create regular file '/home/dev/app/nginx/conf.d/nginx.conf': No such file or directory
 
 
 # todo pgpassword vs postgres_pssword?
