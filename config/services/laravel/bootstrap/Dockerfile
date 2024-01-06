@@ -7,7 +7,11 @@ WORKDIR /app
 RUN apt update
 RUN apt install -y \
     git \
-    unzip
+    unzip \
+    curl \
+    libcurl4-openssl-dev \
+    libxml2-dev \
+    libzip-dev
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
