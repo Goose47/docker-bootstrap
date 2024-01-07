@@ -1,4 +1,4 @@
-#heloe
+# heloe
 This repository will help you to bootstrap new application on a fresh ubuntu server with:
 - Laravel
 - Nginx
@@ -6,9 +6,10 @@ This repository will help you to bootstrap new application on a fresh ubuntu ser
 - Redis
 - Flask
 - Docker & Docker compose
-##Prerequisites
+## Prerequisites
 You will need a non-root user with sudo permissions.
-<br>Create user "dev":
+
+Create user "dev":
 ```bash
 adduser dev
 ```
