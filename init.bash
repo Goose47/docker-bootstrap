@@ -26,7 +26,7 @@ prompt_user() {
     esac
 }
 log_info() {
-    echo -e "${GREEN}${$1}${NC}"
+    echo -e "${GREEN}$1${NC}"
 }
 
 # MAIN SCRIPT
