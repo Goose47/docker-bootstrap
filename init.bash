@@ -1,11 +1,14 @@
 #!/bin/bash
 
-
+# CONSTS
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+NC='\033[0m' # No Color
 # HELPER FUNCTIONS
 prompt_user() {
     local message=$1
     # Ask for confirmation
-    read -p "$message" choice
+    read -p "${YELLOW}${message}${NC}" choice
     case "$choice" in
           [yY] | [yY][eE][sS])
             # operation confirmed
@@ -21,10 +24,13 @@ prompt_user() {
             ;;
     esac
 }
+log_info() {
+    echo -e "${GREEN}${$1}${NC}"
+}
 
 # MAIN SCRIPT
 
-echo "Configuring docker..."
+log_info "Configuring docker"
 # install docker
 while true; do
     prompt_user "Do you want to install docker? (Y/n)  "
@@ -62,7 +68,7 @@ while true; do
 done
 
 # Getting application name
-echo "Docker configured, creating application..."
+log_info "Docker configured, creating application..."
 read -p "Enter application name (default: app) => " app_name
 
 # If no input is provided, set a default value
@@ -87,18 +93,18 @@ while true; do
 done
 
 # Create app path
-echo "Creating $app_path"
+log_info "Creating $app_path"
 mkdir $app_path
-echo "$app_path created"
+log_info "$app_path created"
 
 # Create fresh laravel project
 while true; do
     prompt_user "Create fresh Laravel project at $app_path/laravel? (Y/n)  "
     case $? in
         0)
-          echo "Creating fresh Laravel project"
+          log_info "Creating fresh Laravel project"
           bash ./commands/create_fresh_laravel_project.bash $app_path
-          echo "Fresh Laravel project created"
+          log_info "Fresh Laravel project created"
           break ;;
         1) break ;;
         *) continue ;;
@@ -106,22 +112,28 @@ while true; do
 done
 
 # Copy config files
-echo "Copying configuration files"
+log_info "Copying configuration files"
 cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
 mkdir -p "$app_path/nginx/conf.d"
 cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
 mkdir "$app_path/pgsql"
 cp ./config/services/pgsql/.env "$app_path/pgsql/.env"
-echo "Configuration files copied"
+log_info "Configuration files copied"
 
 cd $app_path
 # Start the containers
+log_info "Starting the containers"
 docker compose up -d
+log_info "Containers started"
 # Install Laravel dependencies
+log_info "Installing composer dependencies"
 docker exec app_laravel composer install
+log_info "Composer dependencies installed"
 # Run Laravel migrations
+log_info "Running migrations"
 docker exec app_laravel php artisan migrate
+log_info "Migrations ran"
 
 
 # todo chmod storage test
