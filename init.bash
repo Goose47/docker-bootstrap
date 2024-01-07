@@ -8,7 +8,8 @@ NC='\033[0m' # No Color
 prompt_user() {
     local message=$1
     # Ask for confirmation
-    read -p "${YELLOW}${message}${NC}" choice
+    echo -e "${YELLOW}${message}${NC}"
+    read choice
     case "$choice" in
           [yY] | [yY][eE][sS])
             # operation confirmed
