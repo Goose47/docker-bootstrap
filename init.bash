@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # CONSTS
+RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
@@ -27,6 +28,10 @@ prompt_user() {
 }
 log_info() {
     echo -e "${GREEN}$1${NC}"
+}
+
+log_error() {
+  echo -e "${RED}$1${NC}"
 }
 
 # MAIN SCRIPT
@@ -87,7 +92,7 @@ while true; do
   fi
 
   if [ -d "$app_path" ]; then
-      echo "Directory already exists."
+      log_error "Directory already exists."
   else
     break
   fi
