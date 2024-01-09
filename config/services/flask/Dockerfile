@@ -4,7 +4,7 @@ WORKDIR /var/www/app/flask
 COPY ./requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-WORKDIR /app
+WORKDIR /var/www/app/flask
 
 EXPOSE 5000
 CMD [ "uwsgi", "--ini", "uwsgi.ini" ]
