@@ -119,10 +119,16 @@ done
 
 # Copy config files
 log_info "Copying configuration files"
+# Common
 cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
+# Laravel
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
+# Flask
+cp -a ./config/services/flask "$app_path/flask"
+# Nginx
 mkdir -p "$app_path/nginx/conf.d"
 cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
+# Postgres
 mkdir "$app_path/pgsql"
 cp ./config/services/pgsql/.env "$app_path/pgsql/.env"
 log_info "Configuration files copied"
@@ -145,5 +151,4 @@ log_info "Migrations ran"
 # todo chmod storage test
 # todo flask
 # todo ssl
-# todo colored messages
 # todo services selection

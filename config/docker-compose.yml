@@ -14,6 +14,28 @@ services:
     networks:
       - app
 
+  laravel:
+    container_name: app_laravel
+    restart: unless-stopped
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile
+    volumes:
+      - ./laravel:/var/www/app/laravel
+    networks:
+      - app
+
+  flask:
+    container_name: app_flask
+    restart: unless-stopped
+    build:
+      context: ./flask
+      dockerfile: Dockerfile
+    volumes:
+      - ./flask:/var/www/app/flask
+    networks:
+      - app
+
   pgsql:
     container_name: app_postgres
     restart: unless-stopped
@@ -27,17 +49,6 @@ services:
     networks:
       - app
 
-  laravel:
-    container_name: app_laravel
-    restart: unless-stopped
-    build:
-      context: ./laravel
-      dockerfile: Dockerfile
-    volumes:
-      - ./laravel:/var/www/app/laravel
-    networks:
-      - app
-
   redis:
     container_name: app_redis
     restart: unless-stopped
@@ -48,6 +59,13 @@ services:
       - redis-volume:/data
     networks:
       - app
+
+  certbot:
+    image: certbot/certbot
+    container_name: app_certbot
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
 
 networks:
   app:
