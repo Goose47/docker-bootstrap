@@ -8,6 +8,3 @@ WORKDIR /var/www/app/flask
 
 EXPOSE 5000
 CMD [ "uwsgi", "--ini", "uwsgi.ini" ]
-
-#CMD ["uwsgi", "--http", "0.0.0.0:80", "--wsgi-file", "/app/start.py", \
-#    "--callable", "app", "--stats", "0.0.0.0:81"]
