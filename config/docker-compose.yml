@@ -44,8 +44,6 @@ services:
     build:
       context: ./vue
       dockerfile: Dockerfile
-    ports:
-      - "80:80"
     networks:
       - app
 
