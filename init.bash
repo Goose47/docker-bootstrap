@@ -137,17 +137,22 @@ log_info "Copying configuration files"
 cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
 # Laravel
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
+cp ./config/services/laravel/laravel.conf "$app_path/nginx/conf.d/laravel.conf"
 # Flask
 cp -a ./config/services/flask "$app_path/flask"
+cp ./config/services/flask/flask.conf "$app_path/nginx/conf.d/flask.conf"
 # Vue
 cp ./config/services/vue/Dockerfile "$app_path/vue/Dockerfile"
 cp ./config/services/vue/nginx.conf "$app_path/vue/nginx.conf"
+cp ./config/services/vue/vue.conf "$app_path/nginx/conf.d/vue.conf"
 # Nginx
-mkdir -p "$app_path/nginx/conf.d"
-cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
+#mkdir -p "$app_path/nginx/conf.d"
+#cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
 # Postgres
 mkdir "$app_path/pgsql"
 cp ./config/services/pgsql/.env "$app_path/pgsql/.env"
+# Redis
+cp ./config/services/redis/.env "$app_path/redis/.env"
 log_info "Configuration files copied"
 
 cd $app_path
@@ -166,6 +171,5 @@ log_info "Migrations ran"
 
 
 # todo chmod storage test
-# todo vue
 # todo ssl
 # todo services selection
