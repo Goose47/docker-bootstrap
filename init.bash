@@ -139,6 +139,9 @@ cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
 # Flask
 cp -a ./config/services/flask "$app_path/flask"
+# Vue
+cp ./config/services/vue/Dockerfile "$app_path/vue/Dockerfile"
+cp ./config/services/vue/nginx.conf "$app_path/vue/nginx.conf"
 # Nginx
 mkdir -p "$app_path/nginx/conf.d"
 cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
