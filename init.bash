@@ -117,6 +117,20 @@ while true; do
     esac
 done
 
+# Create fresh vue project
+while true; do
+    prompt_user "Create fresh Vue.js project at $app_path/vue? (Y/n)  "
+    case $? in
+        0)
+          log_info "Creating fresh Vue.js project"
+          bash ./commands/create_fresh_vue_project.bash $app_path
+          log_info "Fresh Vue.js project created"
+          break ;;
+        1) break ;;
+        *) continue ;;
+    esac
+done
+
 # Copy config files
 log_info "Copying configuration files"
 # Common
@@ -149,6 +163,6 @@ log_info "Migrations ran"
 
 
 # todo chmod storage test
-# todo flask
+# todo vue
 # todo ssl
 # todo services selection

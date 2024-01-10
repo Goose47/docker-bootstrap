@@ -38,6 +38,17 @@ services:
     networks:
       - app
 
+  vue:
+    container_name: app_vue
+    restart: unless-stopped
+    build:
+      context: ./vue
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+      - app
+
   pgsql:
     container_name: app_postgres
     restart: unless-stopped
