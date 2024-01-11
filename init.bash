@@ -138,13 +138,16 @@ cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
 # Laravel
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
 cp ./config/services/laravel/laravel.conf "$app_path/nginx/conf.d/laravel.conf"
+cp ./config/services/laravel/docker-compose.yml "$app_path/laravel/docker-compose.yml"
 # Flask
 cp -a ./config/services/flask "$app_path/flask"
 cp ./config/services/flask/flask.conf "$app_path/nginx/conf.d/flask.conf"
+cp ./config/services/flask/docker-compose.yml "$app_path/flask/docker-compose.yml"
 # Vue
 cp ./config/services/vue/Dockerfile "$app_path/vue/Dockerfile"
 cp ./config/services/vue/nginx.conf "$app_path/vue/nginx.conf"
 cp ./config/services/vue/vue.conf "$app_path/nginx/conf.d/vue.conf"
+cp ./config/services/vue/docker-compose.yml "$app_path/vue/docker-compose.yml"
 # Nginx
 #mkdir -p "$app_path/nginx/conf.d"
 #cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
@@ -158,7 +161,12 @@ log_info "Configuration files copied"
 cd $app_path
 # Start the containers
 log_info "Starting the containers"
-docker compose up -d
+docker compose -f \
+  docker-compose.common.yml \
+  ./laravel/docker-compose.yml \
+  ./flask/docker-compose.yml \
+  ./vue/docker-compose.yml \
+  up -d
 log_info "Containers started"
 # Install Laravel dependencies
 log_info "Installing composer dependencies"

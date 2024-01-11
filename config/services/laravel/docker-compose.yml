@@ -1,0 +1,13 @@
+version: '3'
+services:
+
+  laravel:
+    container_name: app_laravel
+    restart: unless-stopped
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile
+    volumes:
+      - ./laravel:/var/www/app/laravel
+    networks:
+      - app
