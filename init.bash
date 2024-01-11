@@ -135,6 +135,9 @@ done
 log_info "Copying configuration files"
 # Common
 cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
+# Nginx
+mkdir -p "$app_path/nginx/conf.d"
+#cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
 # Laravel
 cp ./config/services/laravel/Dockerfile "$app_path/laravel/Dockerfile"
 cp ./config/services/laravel/laravel.conf "$app_path/nginx/conf.d/laravel.conf"
@@ -148,24 +151,22 @@ cp ./config/services/vue/Dockerfile "$app_path/vue/Dockerfile"
 cp ./config/services/vue/nginx.conf "$app_path/vue/nginx.conf"
 cp ./config/services/vue/vue.conf "$app_path/nginx/conf.d/vue.conf"
 cp ./config/services/vue/docker-compose.yml "$app_path/vue/docker-compose.yml"
-# Nginx
-#mkdir -p "$app_path/nginx/conf.d"
-#cp ./config/services/nginx/conf.d/nginx.conf "$app_path/nginx/conf.d/nginx.conf"
 # Postgres
 mkdir "$app_path/pgsql"
 cp ./config/services/pgsql/.env "$app_path/pgsql/.env"
 # Redis
+mkdir "$app_path/redis"
 cp ./config/services/redis/.env "$app_path/redis/.env"
 log_info "Configuration files copied"
 
 cd $app_path
 # Start the containers
 log_info "Starting the containers"
-docker compose -f \
-  docker-compose.common.yml \
-  ./laravel/docker-compose.yml \
-  ./flask/docker-compose.yml \
-  ./vue/docker-compose.yml \
+docker compose \
+  -f docker-compose.yml \
+  -f ./laravel/docker-compose.yml \
+  -f ./flask/docker-compose.yml \
+  -f ./vue/docker-compose.yml \
   up -d
 log_info "Containers started"
 # Install Laravel dependencies
