@@ -41,7 +41,7 @@ declare -A services
 # services selection
 log_info "Select services"
 while true; do
-    prompt_user "Do you want to add laravel? (Y/n)  "
+    prompt_user "Do you want to add laravel? [Y/n] (no)  "
     case $? in
         0)
           services["laravel"]=1
@@ -52,7 +52,7 @@ while true; do
     esac
 done
 while true; do
-    prompt_user "Do you want to add flask? (Y/n)  "
+    prompt_user "Do you want to add flask? [Y/n] (no)  "
     case $? in
         0)
           services["flask"]=1
@@ -63,7 +63,7 @@ while true; do
     esac
 done
 while true; do
-    prompt_user "Do you want to add vue? (Y/n)  "
+    prompt_user "Do you want to add vue? [Y/n] (no)  "
     case $? in
         0)
           services["vue"]=1
@@ -74,7 +74,7 @@ while true; do
     esac
 done
 while true; do
-    prompt_user "Do you want to add redis? (Y/n)  "
+    prompt_user "Do you want to add redis? [Y/n] (no)  "
     case $? in
         0)
           services["redis"]=1
@@ -85,7 +85,7 @@ while true; do
     esac
 done
 while true; do
-    prompt_user "Do you want to add postgres? (Y/n)  "
+    prompt_user "Do you want to add postgres? [Y/n] (no)  "
     case $? in
         0)
           services["pgsql"]=1
@@ -99,7 +99,7 @@ done
 log_info "Configuring docker"
 # install docker
 while true; do
-    prompt_user "Do you want to install docker? (Y/n)  "
+    prompt_user "Do you want to install docker? [Y/n]  "
     case $? in
         0)
           bash ./commands/install_docker.bash
@@ -111,7 +111,7 @@ done
 
 # install docker compose
 while true; do
-    prompt_user "Do you want to install docker compose? (Y/n)  "
+    prompt_user "Do you want to install docker compose? [Y/n]  "
     case $? in
         0)
           bash ./commands/install_docker_compose.bash
@@ -123,7 +123,7 @@ done
 
 # add current user to docker group
 while true; do
-    prompt_user "Do you want to add current user to docker group (for running docker commands without sudo)? (Y/n)  "
+    prompt_user "Do you want to add current user to docker group (for running docker commands without sudo)? [Y/n]  "
     case $? in
         0)
           bash ./commands/add_user_to_docker_group.bash $SUDO_USER
@@ -166,7 +166,7 @@ log_info "$app_path created"
 if [[ "${services["laravel"]}" -eq 1 ]]; then
   # Create fresh laravel project
   while true; do
-      prompt_user "Create fresh Laravel project at $app_path/laravel? (Y/n)  "
+      prompt_user "Create fresh Laravel project at $app_path/laravel? [Y/n]  "
       case $? in
           0)
             log_info "Creating fresh Laravel project"
@@ -195,7 +195,7 @@ fi
 if [[ "${services["vue"]}" -eq 1 ]]; then
   # Create fresh vue project
   while true; do
-      prompt_user "Create fresh Vue.js project at $app_path/vue? (Y/n)  "
+      prompt_user "Create fresh Vue.js project at $app_path/vue? [Y/n]  "
       case $? in
           0)
             log_info "Creating fresh Vue.js project"
@@ -218,6 +218,7 @@ if [[ "${services["redis"]}" -eq 1 ]]; then
   # Copy config files
   mkdir "$app_path/redis"
   cp ./config/services/redis/.env "$app_path/redis/.env"
+  cp ./config/services/redis/docker-compose.yml "$app_path/redis/docker-compose.yml"
   log_info "Redis configured"
 fi
 
@@ -240,7 +241,7 @@ cd $app_path
 log_info "Starting the containers"
 
 # Command to build
-compose_cmd="docker-compose -f docker-compose.yml"
+compose_cmd="docker compose -f docker-compose.yml"
 
 # Loop through the associative array and add -f parameters for services with value 1
 for service in "${!services[@]}"; do
