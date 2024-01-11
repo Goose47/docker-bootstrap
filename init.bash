@@ -35,6 +35,43 @@ log_error() {
 }
 
 # MAIN SCRIPT
+log_info "Configuring docker"
+# install docker
+while true; do
+    prompt_user "Do you want to install docker? [Y/n]  "
+    case $? in
+        0)
+          bash ./commands/install_docker.bash
+          break ;;
+        1) break ;;
+        *) continue ;;
+    esac
+done
+
+# install docker compose
+while true; do
+    prompt_user "Do you want to install docker compose? [Y/n]  "
+    case $? in
+        0)
+          bash ./commands/install_docker_compose.bash
+          break ;;
+        1) break ;;
+        *) continue ;;
+    esac
+done
+
+# add current user to docker group
+while true; do
+    prompt_user "Do you want to add current user to docker group (for running docker commands without sudo)? [Y/n]  "
+    case $? in
+        0)
+          bash ./commands/add_user_to_docker_group.bash $SUDO_USER
+          break ;;
+        1) break ;;
+        *) continue ;;
+    esac
+done
+
 # an empty array to store selected services
 declare -A services
 
@@ -96,43 +133,6 @@ while true; do
     esac
 done
 
-log_info "Configuring docker"
-# install docker
-while true; do
-    prompt_user "Do you want to install docker? [Y/n]  "
-    case $? in
-        0)
-          bash ./commands/install_docker.bash
-          break ;;
-        1) break ;;
-        *) continue ;;
-    esac
-done
-
-# install docker compose
-while true; do
-    prompt_user "Do you want to install docker compose? [Y/n]  "
-    case $? in
-        0)
-          bash ./commands/install_docker_compose.bash
-          break ;;
-        1) break ;;
-        *) continue ;;
-    esac
-done
-
-# add current user to docker group
-while true; do
-    prompt_user "Do you want to add current user to docker group (for running docker commands without sudo)? [Y/n]  "
-    case $? in
-        0)
-          bash ./commands/add_user_to_docker_group.bash $SUDO_USER
-          break ;;
-        1) break ;;
-        *) continue ;;
-    esac
-done
-
 # Getting application name
 log_info "Docker configured, creating application..."
 read -p "Enter application name (default: app) => " app_name
@@ -162,6 +162,12 @@ done
 log_info "Creating $app_path"
 mkdir $app_path
 log_info "$app_path created"
+
+# Copy config files
+# Common
+cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
+# Nginx
+mkdir -p "$app_path/nginx/conf.d"
 
 if [[ "${services["laravel"]}" -eq 1 ]]; then
   # Create fresh laravel project
@@ -226,14 +232,9 @@ if [[ "${services["pgsql"]}" -eq 1 ]]; then
   # Copy config files
   mkdir "$app_path/pgsql"
   cp ./config/services/pgsql/.env "$app_path/pgsql/.env"
+  cp ./config/services/pgsql/docker-compose.yml "$app_path/pgsql/docker-compose.yml"
   log_info "Postgres configured"
 fi
-
-# Copy config files
-# Common
-cp ./config/docker-compose.yml "$app_path/docker-compose.yml"
-# Nginx
-mkdir -p "$app_path/nginx/conf.d"
 
 cd $app_path
 
