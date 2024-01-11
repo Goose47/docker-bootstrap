@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  pgsql:
+    container_name: app_postgres
+    restart: unless-stopped
+    image: postgres:14
+    ports:
+      - '127.0.0.1:5432:5432'
+    env_file:
+      - ./pgsql/.env
+    volumes:
+      - pgsql-volume:/var/lib/postgresql/data
+    networks:
+      - app
+
+volumes:
+  pgsql-volume:
+    driver: local

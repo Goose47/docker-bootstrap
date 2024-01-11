@@ -14,63 +14,6 @@ services:
     networks:
       - app
 
-  laravel:
-    container_name: app_laravel
-    restart: unless-stopped
-    build:
-      context: ./laravel
-      dockerfile: Dockerfile
-    volumes:
-      - ./laravel:/var/www/app/laravel
-    networks:
-      - app
-
-  flask:
-    container_name: app_flask
-    restart: unless-stopped
-    build:
-      context: ./flask
-      dockerfile: Dockerfile
-    ports:
-      - "5000:5000"
-    volumes:
-      - ./flask:/var/www/app/flask
-    networks:
-      - app
-
-  vue:
-    container_name: app_vue
-    restart: unless-stopped
-    build:
-      context: ./vue
-      dockerfile: Dockerfile
-    networks:
-      - app
-
-  pgsql:
-    container_name: app_postgres
-    restart: unless-stopped
-    image: postgres:14
-    ports:
-      - '127.0.0.1:5432:5432'
-    env_file:
-      - ./pgsql/.env
-    volumes:
-      - pgsql-volume:/var/lib/postgresql/data
-    networks:
-      - app
-
-  redis:
-    container_name: app_redis
-    restart: unless-stopped
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-volume:/data
-    networks:
-      - app
-
   certbot:
     image: certbot/certbot
     container_name: app_certbot
@@ -81,9 +24,3 @@ services:
 networks:
   app:
     driver: bridge
-
-volumes:
-  pgsql-volume:
-    driver: local
-  redis-volume:
-    driver: local
