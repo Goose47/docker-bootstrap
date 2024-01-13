@@ -255,7 +255,6 @@ done
 compose_cmd+=" up -d"
 
 # Run the composed command
-echo "Running command: $compose_cmd"#todo rm
 eval "$compose_cmd"
 
 log_info "Containers started"
